@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store';
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreators';
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, initListAction } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
+import axios from 'axios';
 
 /* 
   容器组件，聪明组件，不关心组件的UI表现，只关心组件的业务逻辑
@@ -29,6 +30,14 @@ class TodoList extends Component {
         handleItemDelete={this.handleItemDelete}
       />
     )
+  }
+
+  componentDidMount() {
+    axios.get('/api/todolist').then((res) => {
+      const data = res.data;
+      const action = initListAction(data);
+      store.dispatch(action);
+    })
   }
 
   handleInputChange(e) {

@@ -6,7 +6,7 @@ const defaultState = {
 };
 
 // reducer 可以接收 state，但是绝不能修改 state
-export default (state = defaultState, action) => {
+const reducer = (state = defaultState, action) => {
   if (action.type === CHANGE_INPUT_VALUE) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.inputValue = action.value;
@@ -30,3 +30,5 @@ export default (state = defaultState, action) => {
   }
   return state;
 }
+
+export default reducer;
